@@ -36,8 +36,8 @@ class Tab4(tk.Frame):
                     messagebox.showwarning('Ошибка', 'Выбран английский язык, но введен русский текст.')
                     return
             encrypted_text = atbash_cipher(text, alphabet)
-            output_text4.delete(0, 'end')
-            output_text4.insert('end', encrypted_text)
+            output_text4.delete(0, tk.END)
+            output_text4.insert(tk.END, encrypted_text)
 
         def decrypt():
             text = output_text4.get()
