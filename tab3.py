@@ -69,26 +69,30 @@ class Tab3(tk.Frame):
         self.encrypted_text_vigenere_entry.insert(tk.END, encrypted_text)
 
     def decrypt_text(self):
+        # Получаем зашифрованный текст и ключ из соответствующих полей ввода
         encrypted_text = self.encrypted_text_vigenere_entry.get().lower()
         key = self.key_entry.get().lower()
 
+        # Проверяем валидность введенных данных
         if not self.validate_input(encrypted_text, key):
             return
 
-        decrypted_text = ""
-        key_index = 0
-        alphabet = self.get_alphabet()
+        decrypted_text = ""  # Инициализируем переменную для расшифрованного текста
+        key_index = 0  # Индекс символа ключа
+        alphabet = self.get_alphabet()  # Получаем алфавит
 
+        # Проходим по каждому символу зашифрованного текста
         for char in encrypted_text:
-            if char.isalpha():
-                shift = ord(key[key_index % len(key)]) - ord(alphabet[0])
-                char_index = alphabet.index(char)
-                decrypted_char = alphabet[(char_index - shift) % len(alphabet)]
-                decrypted_text += decrypted_char
-                key_index += 1
-            else:
+            if char.isalpha():  # Если символ является буквой
+                shift = ord(key[key_index % len(key)]) - ord(alphabet[0])  # Вычисляем сдвиг на основе символа ключа
+                char_index = alphabet.index(char)  # Находим индекс текущего символа в алфавите
+                decrypted_char = alphabet[(char_index - shift) % len(alphabet)]  # Расшифровываем символ
+                decrypted_text += decrypted_char  # Добавляем расшифрованный символ к результату
+                key_index += 1  # Увеличиваем индекс символа ключа для следующей итерации
+            else:  # Если символ не является буквой, добавляем его без изменений
                 decrypted_text += char
 
+        # Очищаем поле ввода и добавляем туда расшифрованный текст
         self.input_text_vigenere_entry.delete(0, tk.END)
         self.input_text_vigenere_entry.insert(tk.END, decrypted_text)
 
